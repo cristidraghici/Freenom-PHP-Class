@@ -74,20 +74,27 @@ class Freenom
     * http://www.freenom.com/en/freenom-api.html
     */
     
+    ########################
+    # Services
+    ########################
+    
     /**
     * Ping the service
     */
     public function ping()
     {
-        return $this->ask('https://api.freenom.com/v1/service/ping');
+        return $this->ask('service/ping');
     }
     
+    ########################
+    # Domains
+    ######################## 
     /**
     * Search for available domains
     */
-    public function check($domain)
+    public function check($domainname)
     {
-        return $this->ask('https://api.freenom.com/v1/domain/search', array('domainname'=>$domain));
+        return $this->ask('domain/search', array('domainname'=>$domainname));
     }
     
     /**
@@ -118,7 +125,9 @@ class Freenom
     * Listing nameserver glue records under a domain
     */
     
-    
+    ########################
+    # Contact
+    ########################
     
     /**
     * Create or modify contact
@@ -136,7 +145,9 @@ class Freenom
     * List contacts under account
     */
     
-    
+    ########################
+    # Transfers
+    ######################## 
     
     /**
     * Get price of a domain transfer
@@ -169,7 +180,10 @@ class Freenom
     */
     private function ask($url, $data=array(), $method='get')
     {
-        $response = $this->get($url, $data, $method);
+        if (strlen($this->apiEmail) > 0) { $data['email'] = $this->apiEmail; }
+        if (strlen($this->apiPassword) > 0) { $data['password'] = $this->apiPassword; }
+        
+        $response = $this->get( Freenom::URL . $url, $data, $method);
         $response = substr($response, strpos($response, '{'), strrpos($response, '}'));
         
         $response = @json_decode($response, true);
