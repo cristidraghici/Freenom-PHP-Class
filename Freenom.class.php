@@ -45,6 +45,12 @@ class Freenom
     */
     public  $debugInfo = '';
     
+    /**
+    * Storage for the object errors
+    * @var number
+    */
+    public $errors = array();
+    
     
     /**
     * Constructor
@@ -68,15 +74,90 @@ class Freenom
     * http://www.freenom.com/en/freenom-api.html
     */
     
+    /**
+    * Ping the service
+    */
     public function ping()
     {
         return $this->ask('https://api.freenom.com/v1/service/ping');
     }
     
+    /**
+    * Search for available domains
+    */
     public function check($domain)
     {
         return $this->ask('https://api.freenom.com/v1/domain/search', array('domainname'=>$domain));
     }
+    
+    /**
+    * Register a domain
+    */
+    
+    /**
+    * Renew a domain name registration
+    */
+    
+    /**
+    * Get info on the registered domain names
+    */
+    
+    /**
+    * Modify a domain
+    */
+    
+    /**
+    * Register or modify a nameserver glue record
+    */
+    
+    /**
+    * Deleting a nameserver glue record
+    */
+    
+    /**
+    * Listing nameserver glue records under a domain
+    */
+    
+    
+    
+    /**
+    * Create or modify contact
+    */
+    
+    /**
+    * Delete contact
+    */
+    
+    /**
+    * Get info on specific contacts
+    */
+    
+    /**
+    * List contacts under account
+    */
+    
+    
+    
+    /**
+    * Get price of a domain transfer
+    */
+    
+    /**
+    * Request a domain transfer
+    */
+    
+    /**
+    * Approve a domain transfer
+    */
+    
+    /**
+    * Decline a domain transfer
+    */
+    
+    /**
+    * List current domain transfers
+    */
+    
     
     
     /**
