@@ -16,28 +16,10 @@ class Freenom
     const URL = 'https://api.freenom.com/v1/';
 	
     /**
-    * The Email of the User accessing the API
-    * @var string
-    */
-    private $apiEmail;
-    
-    /**
-    * The Password of the User accessing the API
-    * @var string
-    */
-    private $apiPassword;
-    
-    /**
     * The timeout for the requests
     * @var number
     */
     private $timeout = 10;
-    
-    /**
-    * The default request format
-    * @var number
-    */
-    public  $requestContentType = 'xml';
     
     /**
     * Storage for the request debugging
@@ -54,24 +36,21 @@ class Freenom
     
     /**
     * Constructor
-    * 
-    * @param String $apiEmail
-    * @param String $apiPassword
-    * @param String $apiKey
+    *
+    * Checks if the cURL extension is loaded.
     */
-    public function __construct($apiEmail='', $apiPassword='')
+    public function __construct()
     {
-        if (!extension_loaded('curl')) { $this->err("PHP required extension - curl - not loaded."); }
-        
-        $this->apiEmail = $apiEmail;
-        $this->apiPassword = $apiPassword;
+        if (!extension_loaded('curl')) { $this->err("PHP required extension - curl - not loaded.", true); }
     }
     
     /**
-    * This is the list of available API actions, put in the class method list
+    * This is the list of available API actions, put in the class method list.
     * More information can be found at:
     *
     * http://www.freenom.com/en/freenom-api.html
+    *
+    * The order of the parameters is slightly changed. The mandatory parameters are put first, then those with a default value and last those that need not be specified.
     */
     
     ########################
@@ -92,58 +71,196 @@ class Freenom
     /**
     * Search for available domains
     */
-    public function check($domainname)
+    public function domain_search($domainname, $email=null, $password=null)
     {
-        return $this->ask('domain/search', array('domainname'=>$domainname));
+        return $this->ask('domain/search', array(
+            'domainname' => $domainname,
+            
+            'email' => $email,
+            'password' => $password
+        ));
     }
     
     /**
     * Register a domain
+    *
+    * Note:
+    * forward_url and nameservers are mutual exclusive. Either the forward_url OR nameservers need to be specified. It is not possible to specify both. In case the nameserver is under the same domain, a glue record must be created for this domain. This can be done by registering Nameserver records. 
     */
+    public function domain_register($domainname, $owner_id, $email, $password, $period='1Y', $forward_url='', $nameserver='', $billing_id='', $tech_id='', $admin_id='')
+    {
+        return $this->ask('domain/register', array(
+            'domainname' => $domainname,
+            'owner_id' => $owner_id,
+            'email' => $email,
+            'password' => $password,
+            
+            'email' => $email,
+            'password' => $password,
+            'period' => $period,
+            'forward_url' => $forward_url,
+            'nameserver' => $nameserver,
+            'billing_id' => $billing_id,
+            'tech_id' => $tech_id,
+            'admin_id' => $admin_id
+        ), 'post');
+    }
+    
     
     /**
     * Renew a domain name registration
     */
+    public function domain_renew($domainname, $email, $password, $period='1Y')
+    {
+        return $this->ask('domain/renew', array(
+            'domainname' => $domainname,
+            'email' => $email,
+            'password' => $password,
+            
+            'period' => $period
+        ), 'post');
+    }
     
     /**
     * Get info on the registered domain names
     */
+    public function domain_getinfo($domainname, $email, $password)
+    {
+        return $this->ask('domain/getinfo', array(
+            'domainname' => $domainname,
+            'email' => $email,
+            'password' => $password
+        ));
+    }
     
     /**
     * Modify a domain
+    *
+    * Note:
+    * forward_url and nameservers are mutual exclusive. Either the forward_url OR nameservers need to be specified. It is not possible to specify both. In case the nameserver is under the same domain, a glue record must be created for this domain. This can be done by registering Nameserver records. 
     */
+    public function dommain_modify($domainname, $email, $password, $owner_id='', $period='1Y', $forward_url='', $nameserver='', $billing_id='', $tech_id='', $admin_id='')
+    {
+        return $this->ask('domain/modify', array(
+            'domainname' => $domainname,
+            'email' => $email,
+            'password' => $password,
+            
+            'owner_id' => $owner_id,
+            'email' => $email,
+            'password' => $password,
+            'period' => $period,
+            'forward_url' => $forward_url,
+            'nameserver' => $nameserver,
+            'billing_id' => $billing_id,
+            'tech_id' => $tech_id,
+            'admin_id' => $admin_id
+        ), 'post');
+    }
     
     /**
     * Register or modify a nameserver glue record
     */
+    public function nameserver_register($domainname, $hostname, $ipaddress, $email, $password)
+    {
+        return $this->ask('nameserver/register', array(
+            'domainname' => $domainname,
+            'hostname' => $hostname,
+            'ipaddress' => $ipaddress,
+            'email' => $email,
+            'password' => $password
+        ), 'post');
+    }
     
     /**
     * Deleting a nameserver glue record
     */
+    public function nameserver_delete($domainname, $hostname, $email, $password)
+    {
+        return $this->ask('nameserver/delete', array(
+            'domainname' => $domainname,
+            'hostname' => $hostname,
+            'email' => $email,
+            'password' => $password
+        ), 'post');
+    }
     
     /**
     * Listing nameserver glue records under a domain
     */
+    public function nameserver_list($domainname, $email, $password)
+    {
+        return $this->ask('nameserver/list', array(
+            'domainname' => $domainname,
+            
+            'email' => $email,
+            'password' => $password
+        ));
+    }
     
     ########################
     # Contact
     ########################
-    
     /**
     * Create or modify contact
     */
+    public function contact_register($contact_title, $contact_first_name, $contact_last_name, $contact_address, $contact_city, $contact_zipcode, $contact_statecode, $contact_country_code, $contact_phone, $contact_email, $email, $password, $contact_organization='', $contact_middle_name='', $contact_fax='', $contact_id='')
+    {
+        return $this->ask('contact/register', array(
+            'contact_title' => $contact_title,
+            'contact_first_name' => $contact_first_name,
+            'contact_last_name' => $contact_last_name,
+            'contact_address' => $contact_address,
+            'contact_city' => $contact_city,
+            'contact_zipcode' => $contact_zipcode,
+            'contact_statecode' => $contact_statecode,
+            'contact_country_code' => $contact_country_code,
+            'contact_phone' => $contact_phone,
+            'contact_email' => $contact_email,
+            'email' => $email,
+            'password' => $password,
+            
+            'contact_organization' => $contact_organization,
+            'contact_middle_name' => $contact_middle_name,
+            'contact_fax' => $contact_fax,
+            'contact_id' => $contact_id
+        ), 'post');
+    }
     
     /**
     * Delete contact
     */
+    public function contact_delete($contact_id, $email, $password)
+    {
+        return $this->ask('contact/delete', array(
+            'contact_id' => $contact_id,
+            'email' => $email,
+            'password' => $password
+        ), 'post');
+    }
     
     /**
     * Get info on specific contacts
     */
+    public function contact_getinfo($contact_id, $email, $password)
+    {
+        return $this->ask('contact/getinfo', array(
+            'contact_id' => $contact_id,
+            'email' => $email,
+            'password' => $password
+        ));
+    }
     
     /**
     * List contacts under account
     */
+    public function contact_list($email, $password)
+    {
+        return $this->ask('contact/list', array(
+            'email' => $email,
+            'password' => $password
+        ));
+    }
     
     ########################
     # Transfers
@@ -152,23 +269,66 @@ class Freenom
     /**
     * Get price of a domain transfer
     */
+    public function domain_transfer_price($domainname, $authcode, $email, $password)
+    {
+        return $this->ask('domain/transfer/price', array(
+            'domainname' => $domainname,
+            'authcode' => $authcode, 
+            'email' => $email,
+            'password' => $password
+        ));
+    }
     
     /**
     * Request a domain transfer
     */
+    public function domain_transfer_request($domainname, $authcode, $owner_id, $period='1Y', $email, $password)
+    {
+        return $this->ask('domain/transfer/request', array(
+            'domainname' => $domainname,
+            'authcode' => $authcode,
+            'owner_id' => $owner_id,
+            'period' => $period,
+            'email' => $email,
+            'password' => $password
+        ), 'post');
+    }
     
     /**
     * Approve a domain transfer
     */
+    public function domain_transfer_approve($domainname, $email, $password)
+    {
+        return $this->ask('domain/transfer/approve', array(
+            'domainname' => $domainname,
+            'email' => $email,
+            'password' => $password
+        ), 'post');
+    }
     
     /**
     * Decline a domain transfer
     */
+    public function domain_transfer_decline($domainname, $reason, $email, $password)
+    {
+        return $this->ask('domain/transfer/decline', array(
+            'domainname' => $domainname,
+            'reason' => $reason,
+            'email' => $email,
+            'password' => $password
+        ), 'post');
+    }
     
     /**
     * List current domain transfers
     */
-    
+    public function domain_transfer_list($email, $password)
+    {
+        return $this->ask('domain/transfer/list', array(
+            'email' => $email,
+            'password' => $password
+        ));
+    }
     
     
     /**
@@ -180,13 +340,17 @@ class Freenom
     */
     private function ask($url, $data=array(), $method='get')
     {
-        if (strlen($this->apiEmail) > 0) { $data['email'] = $this->apiEmail; }
-        if (strlen($this->apiPassword) > 0) { $data['password'] = $this->apiPassword; }
-        
+        // Make the request
         $response = $this->get( Freenom::URL . $url, $data, $method);
         $response = substr($response, strpos($response, '{'), strrpos($response, '}'));
         
         $response = @json_decode($response, true);
+        
+        // Add the encountered non-fatal errors to the response
+        if (count($this->errors) > 0)
+        {
+            $response['errors'] = $this->errors;
+        }
         
         return $response;
     }
@@ -206,14 +370,6 @@ class Freenom
         
         switch (strtolower($method))
         {
-            case 'delete':
-                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-                break;
-            
-            case 'put':
-                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-                break;
-            
             case 'post':
                 curl_setopt($curl, CURLOPT_POST, true);
                 break;
@@ -239,7 +395,7 @@ class Freenom
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->timeout);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: " . $this->type() . '; charset=UTF-8' ));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: text/plain; charset=UTF-8" ));
         curl_setopt($curl, CURLOPT_USERAGENT,'Freenom API Class');
         
         try {
@@ -264,37 +420,10 @@ class Freenom
     }
     
     /**
-    * Helper to set the content type
-    */
-    private function type()
-    {
-        switch ($this->requestContentType)
-        {
-            case 'text/plain':
-            case 'text':
-                return 'text/plain';
-                break;
-            
-            case 'application/xml':
-            case 'xml':
-                return 'application/xml';
-                break;
-            
-            default:
-            case 'application/json':
-            case 'json':
-                return 'application/json';
-                break;
-        }
-        
-        return false;
-    }
-    
-    /**
     * Error handler
     * 
-    * @param String $code
-    * @param String $text
+    * @param String $message
+    * @param String $fatal
     */
     private function err($message='Error encountered', $fatal=false)
     {

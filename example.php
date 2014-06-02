@@ -6,7 +6,7 @@ require_once( 'Freenom.class.php' );
 $freenom = new FreenomAPI\Freenom();
 
 // Send the request
-$result = $freenom->check('freenom.ml');
+$result = $freenom->domain_search('freenom.ml');
 
 // Show the output
 var_dump($result);
