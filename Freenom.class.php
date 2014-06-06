@@ -22,17 +22,10 @@ class Freenom
     private $timeout = 10;
     
     /**
-    * Storage for the request debugging
-    * @var number
-    */
-    public  $debugInfo = '';
-    
-    /**
     * Storage for the object errors
     * @var number
     */
     public $errors = array();
-    
     
     /**
     * Constructor
@@ -67,7 +60,8 @@ class Freenom
     
     ########################
     # Domains
-    ######################## 
+    ########################
+    
     /**
     * Search for available domains
     */
@@ -201,6 +195,7 @@ class Freenom
     ########################
     # Contact
     ########################
+    
     /**
     * Create or modify contact
     */
@@ -330,6 +325,9 @@ class Freenom
         ));
     }
     
+    ########################
+    # Internally used functions
+    ######################## 
     
     /**
     * Private method to send requests
@@ -402,11 +400,11 @@ class Freenom
             $return = curl_exec($curl);
             $this->responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 			
-            $this->debugInfo = curl_getinfo($curl);
+            $this->errors['curl'] = curl_getinfo($curl);
         }
 		catch(Exception $ex)
 		{
-            $this->debugInfo = array(
+            $this->errors['curl'] = array(
                 'no'    => curl_errno($curl),
                 'error' => curl_error($curl)
             );
