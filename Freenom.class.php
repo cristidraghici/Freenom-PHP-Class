@@ -400,7 +400,7 @@ class Freenom
             $return = curl_exec($curl);
             $this->responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 			
-            $this->errors['curl'] = curl_getinfo($curl);
+            //$this->errors['curl'] = curl_getinfo($curl);
         }
 		catch(Exception $ex)
 		{
