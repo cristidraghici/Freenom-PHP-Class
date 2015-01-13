@@ -19,7 +19,7 @@ class Freenom
     * The timeout for the requests
     * @var number
     */
-    private $timeout = 10;
+    private $timeout = 30;
     
     /**
     * Storage for the object errors
@@ -340,7 +340,7 @@ class Freenom
     {
         // Make the request
         $response = $this->get( Freenom::URL . $url, $data, $method);
-        $response = substr($response, strpos($response, '{'), strrpos($response, '}'));
+        //$response = substr($response, strpos($response, '{'), strrpos($response, '}'));
         
         $response = @json_decode($response, true);
         
@@ -381,7 +381,7 @@ class Freenom
                 $method = 'get';
                 break;
         }
-        
+		
         if(!is_null($data) && $method != 'get')
 		{
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
@@ -413,7 +413,7 @@ class Freenom
         }
 		
         curl_close($curl);
-        
+		
         return $return;
     }
     

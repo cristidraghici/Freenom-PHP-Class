@@ -9,5 +9,12 @@ $freenom = new FreenomAPI\Freenom();
 $result = $freenom->domain_search('freenom.ml');
 
 // Show the output
-var_dump($result);
+if ($result != null)
+{
+    var_dump($result);
+}
+else
+{
+    var_dump($freenom->errors);
+}
 ?>
