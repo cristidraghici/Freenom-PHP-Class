@@ -1,5 +1,5 @@
 <?php
-namespace FreenomAPI;
+namespace FreenomAPIv1;
 
 /**
 * Freenom PHP Class
