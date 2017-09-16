@@ -13,7 +13,7 @@ class Freenom
     /**
     * The API base url
     */
-    const URL = 'https://api.freenom.com/v1/';
+    const URL = 'https://api.freenom.com/v2/';
 
     /**
     * The timeout for the requests
@@ -66,14 +66,16 @@ class Freenom
 
     /**
     * Search for available domains
+    * $domaintype : FREE or PAID
     */
-    public function domain_search($domainname, $email=null, $password=null)
+    public function domain_search($domainname, $email=null, $password=null, $domaintype="FREE")
     {
         return $this->ask('domain/search', array(
             'domainname' => $domainname,
 
             'email' => $email,
-            'password' => $password
+            'password' => $password,
+            'domaintype' => $domaintype
         ));
     }
 

@@ -1,9 +1,9 @@
 <?php
 // Include the required files
-require_once('../classes/api.v1.class.php');
+require_once('../classes/api.v2.class.php');
 
 // Init the class
-$freenom = new FreenomAPIv1\Freenom();
+$freenom = new FreenomAPIv2\Freenom();
 
 // Send the request
 $result = $freenom->domain_search('freenom.ml');
