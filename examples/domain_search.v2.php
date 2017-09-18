@@ -9,11 +9,12 @@ require_once( __DIR__ . '/../classes/freenom.v2.class.php');
 require_once( __DIR__ . '/../settings.php');
 
 // Create the object and use it
-$freenom = new \Freenom\V2($config['email'], $config['password'], true);
+$freenom = new \Freenom\V2($config['email'], $config['password'], 1);
 
 // Search for a domain
 $output = $freenom->domain_search(array(
     'domainname' => 'starfish.ml',
+    'domaintype' => 'FREE',
 
     // Optional parameters used for debug purposes
     '__FILE__' => __FILE__,

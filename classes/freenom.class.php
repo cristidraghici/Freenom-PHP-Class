@@ -140,8 +140,19 @@ class Main {
             $method = strtolower($method);
 
             switch (strtolower($method)) {
+                case 'put':
+                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+                    break;
+
+                case 'delete':
+                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+                    break;
+
                 case 'post':
                     curl_setopt($curl, CURLOPT_POST, true);
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
                     break;
 
                 default:
@@ -149,13 +160,7 @@ class Main {
                     if (count($data) > 0) {
                         $url = stristr($url, '?') ? $url . '&' .  http_build_query($data, '', '&') : $url . '?' .  http_build_query($data, '', '&');
                     }
-                    
-                    $method = 'get';
                     break;
-            }
-
-            if (!is_null($data) && $method != 'get') {
-                curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
             }
 
             curl_setopt($curl, CURLOPT_URL, $url);

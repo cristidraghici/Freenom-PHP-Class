@@ -32,14 +32,14 @@ class V2 extends Main {
                 'method' => 'get',
                 'params' => array(
                     'domainname' => '',
+                    'domaintype' => 'FREE', // FREE or PAID
                     'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
-                    'email',
-                    'password'
+                    'domaintype'
                 )
             ),
 
@@ -51,25 +51,31 @@ class V2 extends Main {
                 'method' => 'post',
                 'params' => array(
                     'domainname' => '',
-                    'owner_id' => '',
-                    'email' => '',
-                    'password' => '',
-
-                    'email' => '',
-                    'password' => '',
-                    'period' => '1Y',
+                    'period' => '12M', // Supported periods for Paid domains: 1Y, 2Y, 3Y, 4Y, 5Y, 9Y and 10Y. Free domains are registered in number of months. Supported periods for Free domains: 1M - 12M
                     'forward_url' => '',
+                    'forward_mode' => 'cloak', // Can be cloak or 301_redirect. cloak is default.
                     'nameserver' => '',
+
+                    'owner_id' => '',
                     'billing_id' => '',
                     'tech_id' => '',
                     'admin_id' => '',
+
+                    'domaintype' => 'FREE', // The type of the domain: PAID or FREE
+
+                    'idshield' => 'enabled', // Identity protection parameter, possible values : enabled or disabled
+                    'autorenew' => 'enabled', // Autorenewal setting for this domain. Possible values: enabled or disabled.
+
+                    'email' => '',
+                    'password' => '',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
                     'owner_id',
                     'email',
-                    'password'
+                    'password',
+                    'domaintype'
                 )
             ),
 
@@ -81,17 +87,16 @@ class V2 extends Main {
                 'method' => 'post',
                 'params' => array(
                     'domainname' => '',
+                    'period' => '12M', // The period of registration. If not given it will default to 1Y for paid domains and will default to 3M for free domains
+
                     'email' => '',
                     'password' => '',
-
-                    'period' => '1Y',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
                     'email',
                     'password',
-
                     'period'
                 )
             ),
