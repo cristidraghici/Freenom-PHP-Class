@@ -2,12 +2,11 @@
 
 This is a PHP wrapper class for the [Freenom](http://www.freenom.com) API.
 
-More information about it can be found at http://www.freenom.com/en/freenom-api.html .
+More information about it can be found at <http://www.freenom.com/en/freenom-api.html> .
 
 ## Examples
 
-Usage examples can be found in `./examples`.
-Please remember to edit `settings.example.php` with your credentials and save it as `settings.php`
+Usage examples can be found in `./examples`. Please remember to edit `settings.example.php` with your credentials and save it as `settings.php`
 
 ## TODO
 

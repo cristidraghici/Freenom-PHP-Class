@@ -1,9 +1,10 @@
 <?php
 namespace Freenom;
 
-require_once( __DIR__ . '/freenom.class.php');
+require_once(__DIR__ . '/freenom.class.php');
 
-class V2 extends Main {
+class V2 extends Main
+{
     protected $blueprint;
 
     public function __construct($email, $password, $test_mode=0)
@@ -411,5 +412,3 @@ class V2 extends Main {
         );
     }
 }
-
-?>

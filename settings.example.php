@@ -9,5 +9,3 @@ $config = array(
     'email'=> 'your@email.address',
     'password' => 'yourPassword'
 );
-
-?>

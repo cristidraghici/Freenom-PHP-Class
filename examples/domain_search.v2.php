@@ -5,8 +5,8 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Require the corresponding blueprint and wrapper
-require_once( __DIR__ . '/../classes/freenom.v2.class.php');
-require_once( __DIR__ . '/../settings.php');
+require_once(__DIR__ . '/../classes/freenom.v2.class.php');
+require_once(__DIR__ . '/../settings.php');
 
 // Create the object and use it
 $freenom = new \Freenom\V2($config['email'], $config['password'], 1);
@@ -43,5 +43,3 @@ Array
     [result] => DOMAIN NOT AVAILABLE
 )
 */
-
-?>

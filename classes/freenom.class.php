@@ -1,7 +1,8 @@
 <?php
 namespace Freenom;
 
-class Main {
+class Main
+{
     /**
     * The API base url
     */
@@ -175,7 +176,7 @@ class Main {
             $return = curl_exec($curl);
             curl_close($curl);
         } catch (Exception $ex) {
-            return $this->err( curl_error($curl) , curl_errno($curl), __FILE__, __LINE__);
+            return $this->err(curl_error($curl), curl_errno($curl), __FILE__, __LINE__);
         }
 
         return $return;
@@ -200,5 +201,3 @@ class Main {
         exit;
     }
 }
-
-?>
