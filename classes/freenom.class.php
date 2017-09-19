@@ -140,18 +140,9 @@ class Main
             $method = strtolower($method);
 
             // The authorization
-            if (isset($data['password'])) {
-                if (isset($data['email'])) {
-                    $email = $data['email'];
-                }
-                if (isset($data['user'])) {
-                    $email = $data['user'];
-                }
-
-                $password = $data['password'];
-
+            if (isset($data['email']) && isset($data['password'])) {
                 curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-                curl_setopt($curl, CURLOPT_USERPWD, $email . ":" . $password);
+                curl_setopt($curl, CURLOPT_USERPWD, $data['email'] . ":" .  $data['password']);
             }
 
             // Set the method in the parameters

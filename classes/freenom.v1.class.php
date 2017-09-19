@@ -39,13 +39,13 @@ class V1 extends Main
                 'params' => array(
                     'domainname' => '',
 
-                    'user' => '',
+                    'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
-                    'user',
+                    'email',
                     'password'
                 )
             ),
@@ -65,14 +65,14 @@ class V1 extends Main
                     'billing_id' => '', //	Contact ID of billing contact	No	No
                     'tech_id' => '', //	Contact ID of technical contact	No	No
                     'admin_id' => '', //	Contact ID of admin contact	No	No
-                    'user' => '', //	E-mail address used for authentication	Yes	No
+                    'email' => '', //	E-mail address used for authentication	Yes	No
                     'password' => '', //	Password used for authentication	Yes	No
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
                     'owner_id',
-                    'user',
+                    'email',
                     'password'
                 )
             ),
@@ -87,14 +87,14 @@ class V1 extends Main
                     'domainname' => '',
                     'period' => '1Y',
 
-                    'user' => '',
+                    'email' => '',
                     'password' => '',
 
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
-                    'user',
+                    'email',
                     'password',
 
                     'period'
@@ -109,13 +109,13 @@ class V1 extends Main
                 'method' => 'get',
                 'params' => array(
                     'domainname' => '',
-                    'user' => '',
+                    'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
-                    'user',
+                    'email',
                     'password'
                 )
             ),
@@ -134,13 +134,13 @@ class V1 extends Main
                     'admin_id' => '', //	Contact ID of administrative contact	No	No
                     'tech_id' => '', //	Contact ID of technical contact	No	No
                     'billing_id' => '', //	Contact ID of billing contact	No	No
-                    'user' => '', //	E-mail address used for authentication	Yes	No
+                    'email' => '', //	E-mail address used for authentication	Yes	No
                     'password' => '', //	Password used for authentication	Yes	No
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
-                    'user',
+                    'email',
                     'password'
                 )
             ),
@@ -155,7 +155,7 @@ class V1 extends Main
                     'domainname' => '',
                     'hostname' => '',
                     'ipaddress' => '',
-                    'user' => '',
+                    'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
                 ),
@@ -163,7 +163,7 @@ class V1 extends Main
                     'domainname',
                     'hostname',
                     'ipaddress',
-                    'user',
+                    'email',
                     'password'
                 )
             ),
@@ -177,14 +177,14 @@ class V1 extends Main
                 'params' => array(
                     'domainname' => '',
                     'hostname' => '',
-                    'user' => '',
+                    'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
                     'hostname',
-                    'user',
+                    'email',
                     'password'
                 )
             ),
@@ -198,13 +198,13 @@ class V1 extends Main
                 'params' => array(
                     'domainname' => '',
 
-                    'user' => '',
+                    'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
-                    'user',
+                    'email',
                     'password'
                 )
             ),
@@ -232,7 +232,7 @@ class V1 extends Main
                     'contact_fax' => '', //	Fax number of contact (international format)	No	No
                     'contact_email' => '', //	Email address of contact	Yes	No
                     'contact_id' => '', //	ID of existing contact	No	No
-                    'user' => '', //	E-mail address used for authentication	Yes	No
+                    'email' => '', //	E-mail address used for authentication	Yes	No
                     'password' => '', //	Password used for authentication	Yes	No
                     'test_mode' => '', // => $test_mode
                 ),
@@ -246,7 +246,7 @@ class V1 extends Main
                     'contact_statecode',
                     'contact_phone',
                     'contact_email',
-                    'user',
+                    'email',
                     'password'
                 )
             ),
@@ -259,13 +259,13 @@ class V1 extends Main
                 'method' => 'post',
                 'params' => array(
                     'contact_id' => '',
-                    'user' => '',
+                    'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'contact_id',
-                    'user',
+                    'email',
                     'password'
                 )
             ),
@@ -278,13 +278,13 @@ class V1 extends Main
                 'method' => 'get',
                 'params' => array(
                     'contact_id' => '',
-                    'user' => '',
+                    'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'contact_id',
-                    'user',
+                    'email',
                     'password'
                 )
             ),
@@ -296,12 +296,12 @@ class V1 extends Main
                 'url' => 'contact/list',
                 'method' => 'get',
                 'params' => array(
-                    'user' => '',
+                    'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
-                    'user',
+                    'email',
                     'password'
                 )
             ),
@@ -317,14 +317,14 @@ class V1 extends Main
                 'params' => array(
                     'domainname' => '',
                     'authcode' => '',
-                    'user' => '',
+                    'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
                     'authcode',
-                    'user',
+                    'email',
                     'password'
                 )
             ),
@@ -340,7 +340,7 @@ class V1 extends Main
                     'authcode' => '',
                     'period' => '',
                     'owner_id' => '',
-                    'user' => '',
+                    'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
                 ),
@@ -349,7 +349,7 @@ class V1 extends Main
                     'authcode',
                     'period',
                     'owner_id',
-                    'user',
+                    'email',
                     'password'
                 )
             ),
@@ -362,13 +362,13 @@ class V1 extends Main
                 'method' => 'post',
                 'params' => array(
                     'domainname' => '',
-                    'user' => '',
+                    'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
-                    'user',
+                    'email',
                     'password'
                 )
             ),
@@ -382,14 +382,14 @@ class V1 extends Main
                 'params' => array(
                     'domainname' => '',
                     'reason' => '',
-                    'user' => '',
+                    'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
                     'reason',
-                    'user',
+                    'email',
                     'password'
                 )
             ),
@@ -401,12 +401,12 @@ class V1 extends Main
                 'url' => 'domain/transfer/list',
                 'method' => 'post',
                 'params' => array(
-                    'user' => '',
+                    'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
-                    'user',
+                    'email',
                     'password'
                 )
             )
