@@ -163,8 +163,8 @@ class Main
                 case 'post':
                     curl_setopt($curl, CURLOPT_POST, true);
                     curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
-              	    curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
-              	    curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
+                      curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
+                      curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
                     break;
 
                 default:
@@ -172,7 +172,6 @@ class Main
                     if (count($data) > 0) {
                         $query = http_build_query($data, '', '&');
                         $url = stristr($url, '?') ? $url . '&' . $query  : $url . '?' .  $query;
-
                     }
                     break;
             }
