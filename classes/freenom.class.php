@@ -150,7 +150,7 @@ class Main
 
                 $password = $data['password'];
 
-                curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+                curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
                 curl_setopt($curl, CURLOPT_USERPWD, $email . ":" . $password);
             }
 
@@ -179,20 +179,24 @@ class Main
                 default:
                 case 'get':
                     if (count($data) > 0) {
-                        $url = stristr($url, '?') ? $url . '&' .  http_build_query($data, '', '&') : $url . '?' .  http_build_query($data, '', '&');
+                        $query = http_build_query($data, '', '&');
+                        $url = stristr($url, '?') ? $url . '&' . $query  : $url . '?' .  $query;
+
                     }
                     break;
             }
 
+            // headers
+            $headers = array("Accept: application/x-www-form-urlencoded", "Content-Type: application/x-www-form-urlencoded");
 
             // Other options
             curl_setopt($curl, CURLOPT_URL, $url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Don't print the result
             curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->timeout);
             curl_setopt($curl, CURLOPT_TIMEOUT, $this->timeout);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-            curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: text/plain; charset=UTF-8" ));
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             // curl_setopt($curl, CURLOPT_USERAGENT, 'Freenom API Wrapper Object');
             curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36');
 
