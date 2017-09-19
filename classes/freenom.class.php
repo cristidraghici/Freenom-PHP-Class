@@ -154,6 +154,9 @@ class Main
                 curl_setopt($curl, CURLOPT_USERPWD, $email . ":" . $password);
             }
 
+            // Set the method in the parameters
+            $data['method'] = strtoupper($method);
+
             // The request
             switch (strtolower($method)) {
                 case 'put':
