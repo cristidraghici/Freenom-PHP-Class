@@ -171,7 +171,7 @@ class Main
 
                 case 'post':
                     curl_setopt($curl, CURLOPT_POST, true);
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
               	    curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
               	    curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
                     break;
