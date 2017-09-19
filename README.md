@@ -3,7 +3,9 @@
 This is a PHP wrapper class for the [Freenom](http://www.freenom.com) API.
 It returns information in the JSON format.
 
-More information about it can be found at <http://www.freenom.com/en/freenom-api.html> .
+More information about it can be found on the [Freenom API Page](http://www.freenom.com/en/freenom-api.html).
+
+For information about the methods, please check `./classes/freenom.v*.class.php` files.
 
 ## Examples
 
@@ -12,4 +14,7 @@ Usage examples can be found in `./examples`. Please remember to edit `settings.e
 ## TODO
 
 - add more validation to parameters than just required or not;
-- check the V2 api methods agains the Freenom Documentation.
+- add a testing component;
+- improve code structure;
+- add Composer compatibility;
+- add XML support.
