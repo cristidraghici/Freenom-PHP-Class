@@ -97,8 +97,7 @@ class V2 extends Main
                 'required' => array(
                     'domainname',
                     'email',
-                    'password',
-                    'period'
+                    'password'
                 )
             ),
 
@@ -126,28 +125,29 @@ class V2 extends Main
             */
             'dommain_modify' => array(
                 'url' => 'domain/modify',
-                'method' => 'post',
+                'method' => 'put',
                 'params' => array(
-                    'domainname' => '',
-                    'email' => '',
-                    'password' => '',
+                    'domainname' => '', //	The name of the domain	Yes	No
+                    'forward_url' => '', //	The URL the domain name should forward to	No*	No
+                    'forward_mode' => 'cloak', //	The type of forward. Can be cloak or 301_redirect. cloak is default.	No	No
+                    'nameserver' => '', //	Nameserver to use. Minimally 2 are needed	No*	Yes
+                    'owner_id' => '', //	Contact ID of domain owner	No	No
+                    'admin_id' => '', //	Contact ID of administrative contact	No	No
+                    'tech_id' => '', //	Contact ID of technical contact	No	No
+                    'billing_id' => '', //	Contact ID of billing contact	No	No
 
-                    'owner_id' => '',
-                    'email' => '',
-                    'password' => '',
-                    'period' => '',
-                    'forward_url' => '',
-                    'nameserver' => '',
-                    'billing_id' => '',
-                    'tech_id' => '',
-                    'admin_id' => '',
+                    'email' => '', //	E-mail address used for authentication	Yes	No
+                    'password' => '', //	Password used for authentication	Yes	No
+
+                    'idshield' => 'enabled', //	Identity protection parameter, possible values : enabled or disabled	No	No
+                    'autorenew' => 'enabled', //	Autorenewal setting for this domain. Possible values: enabled or disabled.	No	No
+
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
                     'email',
-                    'password',
-                    'owner_id'
+                    'password'
                 )
             ),
 
