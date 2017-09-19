@@ -40,7 +40,9 @@ class V2 extends Main
                 ),
                 'required' => array(
                     'domainname',
-                    'domaintype'
+                    'domaintype',
+                    'email',
+                    'password'
                 )
             ),
 
@@ -123,7 +125,7 @@ class V2 extends Main
             /**
             * Modify a domain
             */
-            'dommain_modify' => array(
+            'domain_modify' => array(
                 'url' => 'domain/modify',
                 'method' => 'put',
                 'params' => array(
@@ -152,11 +154,98 @@ class V2 extends Main
             ),
 
             /**
+            * Get info on the registered domain names
+            */
+            'domain_delete' => array(
+                'url' => 'domain/delete',
+                'method' => 'delete',
+                'params' => array(
+                    'domainname' => '',
+                    'email' => '',
+                    'password' => '',
+                    'test_mode' => $test_mode
+                ),
+                'required' => array(
+                    'domainname',
+                    'email',
+                    'password'
+                )
+            ),
+
+            /**
+            * Restore a domain to the account
+            */
+            'domain_restore' => array(
+                'url' => 'domain/restore',
+                'method' => 'post',
+                'params' => array(
+                    'domainname' => '',
+                    'email' => '',
+                    'password' => '',
+                    'test_mode' => $test_mode
+                ),
+                'required' => array(
+                    'domainname',
+                    'email',
+                    'password'
+                )
+            ),
+
+            /**
+            * Upgrade a domain
+            */
+            'domain_upgrade' => array(
+                'url' => 'domain/restore',
+                'method' => 'post',
+                'params' => array(
+                    'domainname' => '', //	The name of the domain	Yes	No
+                    'email' => '', //	E-mail address used for authentication	Yes	No
+                    'password' => '', //	Password used for authentication	Yes	No
+                    'owner_id' => '', //	Contact ID of owner contact	No**	No
+                    'billing_id' => '', //	Contact ID of billing contact	No	No
+                    'admin_id' => '', //	Contact ID of admin contact	No	No
+                    'tech_id' => '', //	Contact ID of technical contact	No	No
+                    'idshield' => 'enabled', //	Identity protection parameter, possible values : enabled or disabled	No**	No
+                    'period' => '', //	Number of years to add to domain expiration, after the domain has been upgraded.	Yes	Yes
+
+                    'test_mode' => $test_mode
+                ),
+                'required' => array(
+                    'domainname',
+                    'email',
+                    'password',
+                    'period'
+                )
+            ),
+
+            /**
+            * List domains
+            */
+            'domain_list' => array(
+                'url' => 'domain/list',
+                'method' => 'get',
+                'params' => array(
+                    'pagenr' => '', //		Page number of results. Defaults to 1	No	No
+                    'results_per_page' => '', //		Number of results per page. Defaults to 25	No	No
+                    'email' => '', //		E-mail address used for authentication	No	No
+                    'password' => '', //		Password used for authentication	No	No
+
+                    'test_mode' => $test_mode
+                ),
+                'required' => array(
+                    'email',
+                    'password'
+                )
+            ),
+
+            // Nameservers
+
+            /**
             * Register or modify a nameserver glue record
             */
             'nameserver_register' => array(
                 'url' => 'nameserver/register',
-                'method' => 'post',
+                'method' => 'put',
                 'params' => array(
                     'domainname' => '',
                     'hostname' => '',
@@ -168,6 +257,7 @@ class V2 extends Main
                 'required' => array(
                     'domainname',
                     'hostname',
+                    'ipaddress',
                     'email',
                     'password'
                 )
@@ -178,7 +268,7 @@ class V2 extends Main
             */
             'nameserver_delete' => array(
                 'url' => 'nameserver/delete',
-                'method' => 'post',
+                'method' => 'delete',
                 'params' => array(
                     'domainname' => '',
                     'hostname' => '',
@@ -221,30 +311,37 @@ class V2 extends Main
             */
             'contact_register' => array(
                 'url' => 'contact/register',
-                'method' => 'post',
+                'method' => 'put',
                 'params' => array(
-                    'contact_title' => '',
-                    'contact_first_name' => '',
-                    'contact_last_name' => '',
-                    'contact_address' => '',
-                    'contact_city' => '',
-                    'contact_zipcode' => '',
-                    'contact_statecode' => '',
-                    'contact_country_code' => '',
-                    'contact_phone' => '',
-                    'contact_email' => '',
-                    'email' => '',
-                    'password' => '',
+                    'contact_organization' => '', //	Organization name of contact	No	No
+                    'contact_title' => '', //	Title of the contact	No	No
+                    'contact_firstname' => '', //	First name of contact	Yes	No
+                    'contact_middlename' => '', //	Middle name of contact	No	No
+                    'contact_lastname' => '', //	Last name of contact	Yes	No
+                    'contact_address' => '', //	Address of the contact	Yes	No
+                    'contact_city' => '', //	City of the contact	Yes	No
+                    'contact_zipcode' => '', //	Zipcode of the contact	Yes	No
+                    'contact_statecode' => '', //	ISO-3166 code for state	Yes	No
+                    'contact_countrycode' => '', //	ISO-3166 code for country	Yes	No
+                    'contact_phone' => '', //	Phone number of contact (international format)	Yes	No
+                    'contact_fax' => '', //	Fax number of contact (international format)	No	No
+                    'contact_email' => '', //	Email address of contact	Yes	No
+                    'contact_id' => '', //	ID of existing contact	No	No
 
-                    'contact_organization' => '',
-                    'contact_middle_name' => '',
-                    'contact_fax' => '',
-                    'contact_id' => '',
+                    'email' => '', //	E-mail address used for authentication	Yes	No
+                    'password' => '', //	Password used for authentication	Yes	No
+
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
-                    'contact_first_name',
-                    'contact_last_name',
+                    'contact_firstname',
+                    'contact_lastname',
+                    'contact_address',
+                    'contact_city',
+                    'contact_zipcode',
+                    'contact_statecode',
+                    'contact_phone',
+                    'contact_email',
                     'email',
                     'password'
                 )
@@ -255,7 +352,7 @@ class V2 extends Main
             */
             'contact_delete' => array(
                 'url' => 'contact/delete',
-                'method' => 'post',
+                'method' => 'delete',
                 'params' => array(
                     'contact_id' => '',
                     'email' => '',
@@ -293,7 +390,7 @@ class V2 extends Main
             */
             'contact_list' => array(
                 'url' => 'contact/list',
-                'method' => 'post',
+                'method' => 'get',
                 'params' => array(
                     'email' => '',
                     'password' => '',
@@ -337,8 +434,8 @@ class V2 extends Main
                 'params' => array(
                     'domainname' => '',
                     'authcode' => '',
-                    'owner_id' => '',
                     'period' => '',
+                    'owner_id' => '',
                     'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
@@ -346,8 +443,8 @@ class V2 extends Main
                 'required' => array(
                     'domainname',
                     'authcode',
-                    'owner_id',
                     'period',
+                    'owner_id',
                     'email',
                     'password'
                 )

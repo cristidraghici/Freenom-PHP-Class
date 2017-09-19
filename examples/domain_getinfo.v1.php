@@ -12,7 +12,7 @@ require_once(__DIR__ . '/../settings.php');
 $freenom = new \Freenom\V1($config['email'], $config['password'], 1);
 
 // Search for a domain
-$output = $freenom->domain_search(array(
+$output = $freenom->domain_getinfo(array(
     'domainname' => 'starfish.ml',
 
     // Optional parameters used for debug purposes
@@ -26,19 +26,4 @@ print_r($output);
 // Expected output
 
 /*
-Array
-(
-    [domain] => Array
-        (
-            [0] => Array
-                (
-                    [status] => NOT AVAILABLE
-                    [domainname] => STARFISH.ML
-                )
-
-        )
-
-    [status] => OK
-    [result] => DOMAIN NOT AVAILABLE
-)
 */

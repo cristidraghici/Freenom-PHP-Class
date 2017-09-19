@@ -101,7 +101,6 @@ class Main
             return $this->err("Parameters required for '" . $name . "': " . implode(", ", $err), $file, $line);
         }
 
-
         // Execute the request
         return $this->ask($info['url'], $params, $info['method']);
     }
@@ -140,20 +139,38 @@ class Main
             $curl = curl_init();
             $method = strtolower($method);
 
+            // The authorization
+            if (isset($data['password'])) {
+                if (isset($data['email'])) {
+                    $email = $data['email'];
+                }
+                if (isset($data['user'])) {
+                    $email = $data['user'];
+                }
+
+                $password = $data['password'];
+
+                curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+                curl_setopt($curl, CURLOPT_USERPWD, $email . ":" . $password);
+            }
+
+            // The request
             switch (strtolower($method)) {
                 case 'put':
-                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+                    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
                     break;
 
                 case 'delete':
-                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+                    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
                     break;
 
                 case 'post':
                     curl_setopt($curl, CURLOPT_POST, true);
                     curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+              	    curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
+              	    curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
                     break;
 
                 default:
@@ -164,6 +181,8 @@ class Main
                     break;
             }
 
+
+            // Other options
             curl_setopt($curl, CURLOPT_URL, $url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Don't print the result
             curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->timeout);
@@ -171,7 +190,8 @@ class Main
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: text/plain; charset=UTF-8" ));
-            curl_setopt($curl, CURLOPT_USERAGENT, 'Freenom API Class');
+            // curl_setopt($curl, CURLOPT_USERAGENT, 'Freenom API Wrapper Object');
+            curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36');
 
             $return = curl_exec($curl);
             curl_close($curl);
