@@ -1,20 +1,13 @@
 <?php
 namespace Freenom;
 
-require_once(__DIR__ . '/freenom.class.php');
-
-//
-// Reviewed after: https://web.archive.org/web/20140202161459/http://www.freenom.com/en/freenom-api.html
-// Note: domain search works with user, instead of email, as in specs
-//
-
-class V1 extends Main
+class FreenomV2 extends FreenomMain
 {
     protected $blueprint;
 
     public function __construct($email, $password, $test_mode=0)
     {
-        parent::__construct('https://api.freenom.com/v1/', $email, $password);
+        parent::__construct('https://api.freenom.com/v2/', $email, $password);
 
         // The blueprint for the api
         $this->blueprint = array(
@@ -38,13 +31,14 @@ class V1 extends Main
                 'method' => 'get',
                 'params' => array(
                     'domainname' => '',
-
+                    'domaintype' => 'FREE', // FREE or PAID
                     'email' => '',
                     'password' => '',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
+                    'domaintype',
                     'email',
                     'password'
                 )
@@ -57,23 +51,32 @@ class V1 extends Main
                 'url' => 'domain/register',
                 'method' => 'post',
                 'params' => array(
-                    'domainname' => '', //	The name of the domain	Yes	No
-                    'period' => '', //	The period of registration. Defaults to 1Y if not given	No	No
-                    'forward_url' => '', //	The URL the domain name should forward to	No*	No
-                    'nameserver' => '', //	Nameserver to use. A minimum of 2 nameservers is required	No*	Yes
-                    'owner_id' => '', //	Contact ID of domain owner	Yes	No
-                    'billing_id' => '', //	Contact ID of billing contact	No	No
-                    'tech_id' => '', //	Contact ID of technical contact	No	No
-                    'admin_id' => '', //	Contact ID of admin contact	No	No
-                    'email' => '', //	E-mail address used for authentication	Yes	No
-                    'password' => '', //	Password used for authentication	Yes	No
+                    'domainname' => '',
+                    'period' => '12M', // Supported periods for Paid domains: 1Y, 2Y, 3Y, 4Y, 5Y, 9Y and 10Y. Free domains are registered in number of months. Supported periods for Free domains: 1M - 12M
+                    'forward_url' => '',
+                    'forward_mode' => 'cloak', // Can be cloak or 301_redirect. cloak is default.
+                    'nameserver' => '',
+
+                    'owner_id' => '',
+                    'billing_id' => '',
+                    'tech_id' => '',
+                    'admin_id' => '',
+
+                    'domaintype' => 'FREE', // The type of the domain: PAID or FREE
+
+                    'idshield' => 'enabled', // Identity protection parameter, possible values : enabled or disabled
+                    'autorenew' => 'enabled', // Autorenewal setting for this domain. Possible values: enabled or disabled.
+
+                    'email' => '',
+                    'password' => '',
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
                     'owner_id',
                     'email',
-                    'password'
+                    'password',
+                    'domaintype'
                 )
             ),
 
@@ -85,19 +88,16 @@ class V1 extends Main
                 'method' => 'post',
                 'params' => array(
                     'domainname' => '',
-                    'period' => '1Y',
+                    'period' => '12M', // The period of registration. If not given it will default to 1Y for paid domains and will default to 3M for free domains
 
                     'email' => '',
                     'password' => '',
-
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
                     'domainname',
                     'email',
-                    'password',
-
-                    'period'
+                    'password'
                 )
             ),
 
@@ -123,19 +123,25 @@ class V1 extends Main
             /**
             * Modify a domain
             */
-            'dommain_modify' => array(
+            'domain_modify' => array(
                 'url' => 'domain/modify',
-                'method' => 'post',
+                'method' => 'put',
                 'params' => array(
                     'domainname' => '', //	The name of the domain	Yes	No
                     'forward_url' => '', //	The URL the domain name should forward to	No*	No
+                    'forward_mode' => 'cloak', //	The type of forward. Can be cloak or 301_redirect. cloak is default.	No	No
                     'nameserver' => '', //	Nameserver to use. Minimally 2 are needed	No*	Yes
                     'owner_id' => '', //	Contact ID of domain owner	No	No
                     'admin_id' => '', //	Contact ID of administrative contact	No	No
                     'tech_id' => '', //	Contact ID of technical contact	No	No
                     'billing_id' => '', //	Contact ID of billing contact	No	No
+
                     'email' => '', //	E-mail address used for authentication	Yes	No
                     'password' => '', //	Password used for authentication	Yes	No
+
+                    'idshield' => 'enabled', //	Identity protection parameter, possible values : enabled or disabled	No	No
+                    'autorenew' => 'enabled', //	Autorenewal setting for this domain. Possible values: enabled or disabled.	No	No
+
                     'test_mode' => $test_mode
                 ),
                 'required' => array(
@@ -146,11 +152,98 @@ class V1 extends Main
             ),
 
             /**
+            * Get info on the registered domain names
+            */
+            'domain_delete' => array(
+                'url' => 'domain/delete',
+                'method' => 'delete',
+                'params' => array(
+                    'domainname' => '',
+                    'email' => '',
+                    'password' => '',
+                    'test_mode' => $test_mode
+                ),
+                'required' => array(
+                    'domainname',
+                    'email',
+                    'password'
+                )
+            ),
+
+            /**
+            * Restore a domain to the account
+            */
+            'domain_restore' => array(
+                'url' => 'domain/restore',
+                'method' => 'post',
+                'params' => array(
+                    'domainname' => '',
+                    'email' => '',
+                    'password' => '',
+                    'test_mode' => $test_mode
+                ),
+                'required' => array(
+                    'domainname',
+                    'email',
+                    'password'
+                )
+            ),
+
+            /**
+            * Upgrade a domain
+            */
+            'domain_upgrade' => array(
+                'url' => 'domain/restore',
+                'method' => 'post',
+                'params' => array(
+                    'domainname' => '', //	The name of the domain	Yes	No
+                    'email' => '', //	E-mail address used for authentication	Yes	No
+                    'password' => '', //	Password used for authentication	Yes	No
+                    'owner_id' => '', //	Contact ID of owner contact	No**	No
+                    'billing_id' => '', //	Contact ID of billing contact	No	No
+                    'admin_id' => '', //	Contact ID of admin contact	No	No
+                    'tech_id' => '', //	Contact ID of technical contact	No	No
+                    'idshield' => 'enabled', //	Identity protection parameter, possible values : enabled or disabled	No**	No
+                    'period' => '', //	Number of years to add to domain expiration, after the domain has been upgraded.	Yes	Yes
+
+                    'test_mode' => $test_mode
+                ),
+                'required' => array(
+                    'domainname',
+                    'email',
+                    'password',
+                    'period'
+                )
+            ),
+
+            /**
+            * List domains
+            */
+            'domain_list' => array(
+                'url' => 'domain/list',
+                'method' => 'get',
+                'params' => array(
+                    'pagenr' => '', //		Page number of results. Defaults to 1	No	No
+                    'results_per_page' => '', //		Number of results per page. Defaults to 25	No	No
+                    'email' => '', //		E-mail address used for authentication	No	No
+                    'password' => '', //		Password used for authentication	No	No
+
+                    'test_mode' => $test_mode
+                ),
+                'required' => array(
+                    'email',
+                    'password'
+                )
+            ),
+
+            // Nameservers
+
+            /**
             * Register or modify a nameserver glue record
             */
             'nameserver_register' => array(
                 'url' => 'nameserver/register',
-                'method' => 'post',
+                'method' => 'put',
                 'params' => array(
                     'domainname' => '',
                     'hostname' => '',
@@ -173,7 +266,7 @@ class V1 extends Main
             */
             'nameserver_delete' => array(
                 'url' => 'nameserver/delete',
-                'method' => 'post',
+                'method' => 'delete',
                 'params' => array(
                     'domainname' => '',
                     'hostname' => '',
@@ -216,10 +309,10 @@ class V1 extends Main
             */
             'contact_register' => array(
                 'url' => 'contact/register',
-                'method' => 'post',
+                'method' => 'put',
                 'params' => array(
                     'contact_organization' => '', //	Organization name of contact	No	No
-                    'contact_title' => '', //	Title of the contact	Yes	No
+                    'contact_title' => '', //	Title of the contact	No	No
                     'contact_firstname' => '', //	First name of contact	Yes	No
                     'contact_middlename' => '', //	Middle name of contact	No	No
                     'contact_lastname' => '', //	Last name of contact	Yes	No
@@ -232,12 +325,13 @@ class V1 extends Main
                     'contact_fax' => '', //	Fax number of contact (international format)	No	No
                     'contact_email' => '', //	Email address of contact	Yes	No
                     'contact_id' => '', //	ID of existing contact	No	No
+
                     'email' => '', //	E-mail address used for authentication	Yes	No
                     'password' => '', //	Password used for authentication	Yes	No
-                    'test_mode' => '', // => $test_mode
+
+                    'test_mode' => $test_mode
                 ),
                 'required' => array(
-                    'contact_title',
                     'contact_firstname',
                     'contact_lastname',
                     'contact_address',
@@ -256,7 +350,7 @@ class V1 extends Main
             */
             'contact_delete' => array(
                 'url' => 'contact/delete',
-                'method' => 'post',
+                'method' => 'delete',
                 'params' => array(
                     'contact_id' => '',
                     'email' => '',
@@ -399,7 +493,7 @@ class V1 extends Main
             */
             'domain_transfer_list' => array(
                 'url' => 'domain/transfer/list',
-                'method' => 'post',
+                'method' => 'get',
                 'params' => array(
                     'email' => '',
                     'password' => '',

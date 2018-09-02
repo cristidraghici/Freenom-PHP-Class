@@ -5,7 +5,7 @@
 // This will enable you to use the test file
 //
 
-$config = array(
+$config = [
     'email'=> 'your@email.address',
     'password' => 'yourPassword'
-);
+];
