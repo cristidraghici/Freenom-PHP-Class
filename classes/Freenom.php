@@ -1,7 +1,7 @@
 <?php
 namespace Freenom;
 
-class Main
+class FreenomMain
 {
     /**
     * The API base url

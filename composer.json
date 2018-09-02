@@ -1,0 +1,29 @@
+{
+    "name": "cristidraghici/Freenom-PHP-Class",
+    "description": "Freenom.com API wrapper for PHP.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Peter",
+            "email": "peter279k@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Freenom\\": "classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Freenom\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=7.0",
+        "ext-curl": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5"
+    }
+}
