@@ -22,24 +22,4 @@ $output = $freenom->domain_search(array(
 ));
 
 // Get the output
-print_r($output);
-
-// Expected output
-
-/*
-Array
-(
-    [status] => OK
-    [domain] => Array
-        (
-            [0] => Array
-                (
-                    [status] => NOT AVAILABLE
-                    [domainname] => STARFISH.ML
-                )
-
-        )
-
-    [result] => DOMAIN NOT AVAILABLE
-)
-*/
+var_dump($output);
