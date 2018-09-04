@@ -72,7 +72,7 @@ class FreenomV1 extends FreenomMain
             /**
             * Renew a domain name registration
             */
-            'domain_renew' => [
+            'domainRenew' => [
                 'url' => 'domain/renew',
                 'method' => 'post',
                 'params' => [
@@ -93,7 +93,7 @@ class FreenomV1 extends FreenomMain
             /**
             * Get info on the registered domain names
             */
-            'domain_getinfo' => [
+            'domainGetinfo' => [
                 'url' => 'domain/getinfo',
                 'method' => 'get',
                 'params' => [
@@ -112,7 +112,7 @@ class FreenomV1 extends FreenomMain
             /**
             * Modify a domain
             */
-            'dommain_modify' => [
+            'dommainModify' => [
                 'url' => 'domain/modify',
                 'method' => 'post',
                 'params' => [
@@ -137,7 +137,7 @@ class FreenomV1 extends FreenomMain
             /**
             * Register or modify a nameserver glue record
             */
-            'nameserver_register' => [
+            'nameserverRegister' => [
                 'url' => 'nameserver/register',
                 'method' => 'post',
                 'params' => [
@@ -160,7 +160,7 @@ class FreenomV1 extends FreenomMain
             /**
             * Deleting a nameserver glue record
             */
-            'nameserver_delete' => [
+            'nameserverDelete' => [
                 'url' => 'nameserver/delete',
                 'method' => 'post',
                 'params' => [
@@ -181,7 +181,7 @@ class FreenomV1 extends FreenomMain
             /**
             * Listing nameserver glue records under a domain
             */
-            'nameserver_list' => [
+            'nameserverList' => [
                 'url' => 'nameserver/list',
                 'method' => 'get',
                 'params' => [
@@ -202,7 +202,7 @@ class FreenomV1 extends FreenomMain
             /**
             * Create or modify contact
             */
-            'contact_register' => [
+            'contactRegister' => [
                 'url' => 'contact/register',
                 'method' => 'post',
                 'params' => [
@@ -242,7 +242,7 @@ class FreenomV1 extends FreenomMain
             /**
             * Delete contact
             */
-            'contact_delete' => [
+            'contactDelete' => [
                 'url' => 'contact/delete',
                 'method' => 'post',
                 'params' => [
@@ -261,7 +261,7 @@ class FreenomV1 extends FreenomMain
             /**
             * Get info on specific contacts
             */
-            'contact_getinfo' => [
+            'contactGetinfo' => [
                 'url' => 'contact/getinfo',
                 'method' => 'get',
                 'params' => [
@@ -280,7 +280,7 @@ class FreenomV1 extends FreenomMain
             /**
             * List contacts under account
             */
-            'contact_list' => [
+            'contactList' => [
                 'url' => 'contact/list',
                 'method' => 'get',
                 'params' => [
@@ -299,7 +299,7 @@ class FreenomV1 extends FreenomMain
             /**
             * Get price of a domain transfer
             */
-            'domain_transfer_price' => [
+            'domainTransferPrice' => [
                 'url' => 'domain/transfer/price',
                 'method' => 'get',
                 'params' => [
@@ -320,7 +320,7 @@ class FreenomV1 extends FreenomMain
             /**
             * Request a domain transfer
             */
-            'domain_transfer_request' => [
+            'domainTransferRequest' => [
                 'url' => 'domain/transfer/request',
                 'method' => 'post',
                 'params' => [
@@ -345,7 +345,7 @@ class FreenomV1 extends FreenomMain
             /**
             * Approve a domain transfer
             */
-            'domain_transfer_approve' => [
+            'domainTransferApprove' => [
                 'url' => 'domain/transfer/approve',
                 'method' => 'post',
                 'params' => [
@@ -364,7 +364,7 @@ class FreenomV1 extends FreenomMain
             /**
             * Decline a domain transfer
             */
-            'domain_transfer_decline' => [
+            'domainTransferDecline' => [
                 'url' => 'domain/transfer/decline',
                 'method' => 'post',
                 'params' => [
@@ -385,7 +385,7 @@ class FreenomV1 extends FreenomMain
             /**
             * List current domain transfers
             */
-            'domain_transfer_list' => [
+            'domainTransferList' => [
                 'url' => 'domain/transfer/list',
                 'method' => 'post',
                 'params' => [
