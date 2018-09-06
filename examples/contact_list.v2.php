@@ -19,9 +19,4 @@ $output = $freenom->contact_list(array(
 ));
 
 // Get the output
-print_r($output);
-
-// Expected output
-
-/*
-*/
+var_dump($output);

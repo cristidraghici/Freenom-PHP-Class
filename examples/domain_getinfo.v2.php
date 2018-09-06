@@ -21,9 +21,4 @@ $output = $freenom->domain_getinfo(array(
 ));
 
 // Get the output
-print_r($output);
-
-// Expected output
-
-/*
-*/
+var_dump($output);
