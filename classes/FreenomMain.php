@@ -163,6 +163,8 @@ abstract class FreenomMain
 
                 default:
                     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+                    $url .= "?".http_build_query($data);
+                    break;
             }
 
             $curl = $this->buildCurlOptions($curl, $url, $data);
